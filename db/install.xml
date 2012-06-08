@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/assignment/type/pointcard/db" VERSION="20120607" COMMENT="XMLDB file for Moodle mod/assignment/type/pointcard"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="assignment_pointcards" COMMENT="table to store the informations of pointcard" NEXT="timesfalse">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="assignment"/>
+        <FIELD NAME="assignment" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="password"/>
+        <FIELD NAME="password" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" PREVIOUS="assignment" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="the grade of the pointcards" PREVIOUS="password" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="grade" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="userid" NEXT="timeassociated"/>
+        <FIELD NAME="timeassociated" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="timecreated"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="assignment"/>
+        <KEY NAME="assignment" TYPE="foreign" FIELDS="assignment" REFTABLE="assignment" REFFIELDS="id" PREVIOUS="primary" NEXT="password"/>
+        <KEY NAME="password" TYPE="unique" FIELDS="password" PREVIOUS="assignment" NEXT="userid"/>
+        <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="password"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="timesfalse" COMMENT="Default comment for the table, please edit me" PREVIOUS="assignment_pointcards">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="timesleft"/>
+        <FIELD NAME="timesleft" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="3" SEQUENCE="false" PREVIOUS="userid" NEXT="banmark"/>
+        <FIELD NAME="banmark" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="timesleft" NEXT="bantime"/>
+        <FIELD NAME="bantime" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="banmark"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="userid"/>
+        <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
